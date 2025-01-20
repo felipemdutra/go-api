@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,7 +8,6 @@ import (
 
 func RouteHandler() {
     http.HandleFunc("/", homePageRoute)
-    http.HandleFunc("/mariana", marianaPageRoute)
 }
 
 func homePageRoute(w http.ResponseWriter, r *http.Request) {
@@ -30,9 +28,5 @@ func homePageRoute(w http.ResponseWriter, r *http.Request) {
     }
 
     http.ServeContent(w, r, "../html/index.html", fileInfo.ModTime(), file)
-}
-
-func marianaPageRoute(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "A Mariana esteve aqui!\n")
 }
 
