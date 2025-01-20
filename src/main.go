@@ -1,15 +1,17 @@
 package main
 
 import (
-    "go-api/src/core"
+	"go-api/src/core"
+	"go-api/src/routes"
 )
 
 
 func main() {
     const PORT int = 8080
 
-    var server *core.Server = core.CreateServer(PORT)
+    app := core.CreateServer(PORT)
 
-    core.StartServer(server)
+    app.Get("/", routes.HomeRouteHandler)
+    app.Start()
 }
 
