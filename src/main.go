@@ -1,7 +1,7 @@
 package main
 
 import (
-    "http-server/src/core"
+    "go-api/src/core"
 )
 
 
