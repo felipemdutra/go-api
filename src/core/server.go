@@ -2,7 +2,7 @@ package core
 
 import (
 	"fmt"
-	"http-server/src/routes"
+	"go-api/src/routes"
 	"net/http"
 )
 
