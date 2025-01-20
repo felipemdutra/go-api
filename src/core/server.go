@@ -2,7 +2,6 @@ package core
 
 import (
 	"fmt"
-	"go-api/src/routes"
 	"net/http"
 )
 
@@ -10,16 +9,19 @@ type Server struct {
     port int
 }
 
-func CreateServer(port int) *Server {
-    return &Server {
-        port: port,
-    }
+func (server *Server) Start() {
+    http.ListenAndServe(fmt.Sprintf(":%d", server.port), nil)
 }
 
-func StartServer(server *Server) {
-    routes.RouteHandler()
+func CreateServer(port int) *Server {
+    var server *Server = &Server {
+        port: port,
+    }
 
-    http.ListenAndServe(fmt.Sprintf(":%d", server.port), nil)
-    fmt.Printf("Listening on port %d...", server.port)
+    return server
+}
+
+func (app *Server) Get(route string, routeHandler func(http.ResponseWriter, *http.Request)) {
+    http.HandleFunc(route, routeHandler)
 }
 
