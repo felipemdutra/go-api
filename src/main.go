@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"go-api/src/core"
 	"go-api/src/routes"
-	"net/http"
 )
 
 func main() {
@@ -13,9 +11,7 @@ func main() {
     app := core.CreateServer(PORT)
 
     app.Get("/", routes.HomeRouteHandler)
-    app.Get("/test", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprint(w, "This is working!!!\n");
-    })
+    app.Post("/create-user", routes.GetJsonResponse)
 
     app.Start()
 }
