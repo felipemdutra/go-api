@@ -15,7 +15,6 @@ func (s *Server) handleIncomingRequests() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         route := s.router.FindRoute(r.Method, r.URL.Path)
         if route != nil {
-            fmt.Printf("New %s connection from %s\n", r.Method, r.URL.Path)
             route.Handler(w, r)
         } else {
             http.NotFound(w, r)
@@ -23,9 +22,11 @@ func (s *Server) handleIncomingRequests() {
     })
 }
 
-func (server *Server) Start() {
+func (server *Server) Start() error {
     server.handleIncomingRequests()
-    http.ListenAndServe(fmt.Sprintf(":%d", server.port), nil)
+    err := http.ListenAndServe(fmt.Sprintf(":%d", server.port), nil)
+
+    return err
 }
 
 func CreateServer(port int) *Server {
@@ -39,6 +40,11 @@ func CreateServer(port int) *Server {
 
 func (app *Server) Get(path string, routeHandler func(http.ResponseWriter, *http.Request)) {
     app.router.AddRoute("GET", path, routeHandler)
-
 }
+
+func (app *Server) Post(path string, routeHandler func(http.ResponseWriter, *http.Request)) {
+    app.router.AddRoute("POST", path, routeHandler)
+}
+
+
 
